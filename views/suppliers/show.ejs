@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+    <div class="main-container">
+        <div class="container">
+            <div class="glass-container fade-in" data-aos="fade-up">
+                <!-- Header Section -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h1 class="mb-2">
+                            <i class="fas fa-truck me-3"></i>
+                            Chi tiết nhà cung cấp
+                        </h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="/suppliers">Nhà cung cấp</a></li>
+                                <li class="breadcrumb-item active">Chi tiết</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div>
+                        <a href="/suppliers/<%= supplier._id %>/edit" class="btn btn-primary me-2">
+                            <i class="fas fa-edit me-2"></i>
+                            Chỉnh sửa
+                        </a>
+                        <a href="/suppliers" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>
+                            Quay lại
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Supplier Information Card -->
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="card mb-4" data-aos="fade-right">
+                            <div class="card-header">
+                                <h4 class="mb-0">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    Thông tin cơ bản
+                                </h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                            <tr>
+                                                <th width="30%">
+                                                    <i class="fas fa-building me-2 text-primary"></i>
+                                                    Tên công ty:
+                                                </th>
+                                                <td><strong><%= supplier.name || 'N/A' %></strong></td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <i class="fas fa-user me-2 text-success"></i>
+                                                    Người liên hệ:
+                                                </th>
+                                                <td><%= supplier.contactPerson || 'N/A' %></td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <i class="fas fa-envelope me-2 text-info"></i>
+                                                    Email:
+                                                </th>
+                                                <td>
+                                                    <% if (supplier.email) { %>
+                                                        <a href="mailto:<%= supplier.email %>" class="text-decoration-none">
+                                                            <%= supplier.email %>
+                                                        </a>
+                                                    <% } else { %>
+                                                        N/A
+                                                    <% } %>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <i class="fas fa-phone me-2 text-warning"></i>
+                                                    Số điện thoại:
+                                                </th>
+                                                <td>
+                                                    <% if (supplier.phone) { %>
+                                                        <a href="tel:<%= supplier.phone %>" class="text-decoration-none">
+                                                            <%= supplier.phone %>
+                                                        </a>
+                                                    <% } else { %>
+                                                        N/A
+                                                    <% } %>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <i class="fas fa-map-marker-alt me-2 text-danger"></i>
+                                                    Địa chỉ:
+                                                </th>
+                                                <td><%= supplier.address || 'N/A' %></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Metadata Card -->
+                    <div class="col-lg-4">
+                        <div class="card mb-4" data-aos="fade-left">
+                            <div class="card-header">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-clock me-2"></i>
+                                    Thông tin hệ thống
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-borderless table-sm">
+                                        <tbody>
+                                            <tr>
+                                                <th>
+                                                    <i class="fas fa-calendar-plus me-2 text-success"></i>
+                                                    Ngày tạo:
+                                                </th>
+                                                <td>
+                                                    <% if (supplier.createdAt) { %>
+                                                        <%= new Date(supplier.createdAt).toLocaleDateString('vi-VN') %>
+                                                    <% } else { %>
+                                                        <span class="text-muted">Không có thông tin</span>
+                                                    <% } %>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <i class="fas fa-calendar-edit me-2 text-warning"></i>
+                                                    Cập nhật:
+                                                </th>
+                                                <td>
+                                                    <% if (supplier.updatedAt) { %>
+                                                        <%= new Date(supplier.updatedAt).toLocaleDateString('vi-VN') %>
+                                                    <% } else { %>
+                                                        <span class="text-muted">Không có thông tin</span>
+                                                    <% } %>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <i class="fas fa-hashtag me-2 text-info"></i>
+                                                    ID:
+                                                </th>
+                                                <td>
+                                                    <code class="text-muted small"><%= supplier._id %></code>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Card -->
+                        <div class="card" data-aos="fade-left" data-aos-delay="100">
+                            <div class="card-header">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-cogs me-2"></i>
+                                    Thao tác
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-grid gap-2">
+                                    <a href="/suppliers/<%= supplier._id %>/edit" class="btn btn-primary">
+                                        <i class="fas fa-edit me-2"></i>
+                                        Chỉnh sửa thông tin
+                                    </a>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                        <i class="fas fa-trash me-2"></i>
+                                        Xóa nhà cung cấp
+                                    </button>
+                                    <a href="/suppliers/new" class="btn btn-success">
+                                        <i class="fas fa-plus me-2"></i>
+                                        Thêm nhà cung cấp mới
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products from this Supplier (if any) -->
+                <div class="card mt-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-header">
+                        <h4 class="mb-0">
+                            <i class="fas fa-boxes me-2"></i>
+                            Sản phẩm từ nhà cung cấp này
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <% if (typeof products !== 'undefined' && products && products.length > 0) { %>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Giá</th>
+                                            <th>Số lượng</th>
+                                            <th>Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% products.forEach(product => { %>
+                                            <tr>
+                                                <td>
+                                                    <a href="/products/<%= product._id %>" class="text-decoration-none">
+                                                        <%= product.name %>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-success">
+                                                        <%= new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(product.price || 0) %>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-info"><%= product.quantity || 0 %></span>
+                                                </td>
+                                                <td>
+                                                    <a href="/products/<%= product._id %>" class="btn btn-sm btn-outline-primary">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <% }); %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <% } else { %>
+                            <div class="text-center py-4">
+                                <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+                                <p class="text-muted">Chưa có sản phẩm nào từ nhà cung cấp này.</p>
+                                <a href="/products/new" class="btn btn-primary">
+                                    <i class="fas fa-plus me-2"></i>
+                                    Thêm sản phẩm mới
+                                </a>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-exclamation-triangle text-danger me-2"></i>
+                        Xác nhận xóa
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn muốn xóa nhà cung cấp <strong><%= supplier.name %></strong> không?</p>
+                    <p class="text-danger small">
+                        <i class="fas fa-warning me-1"></i>
+                        Hành động này không thể hoàn tác!
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>
+                        Hủy
+                    </button>
+                    <form action="/suppliers/<%= supplier._id %>?_method=DELETE" method="POST" class="d-inline">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash me-2"></i>
+                            Xóa
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+    .breadcrumb {
+        background: transparent;
+        padding: 0;
+        margin: 0;
+    }
+
+    .breadcrumb a {
+        color: var(--primary-color);
+        text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+        text-decoration: underline;
+    }
+
+    code {
+        font-size: 0.8rem;
+        padding: 2px 6px;
+        border-radius: 4px;
+        background: #f8f9fa;
+    }
+
+    .table th {
+        font-weight: 600;
+        border-bottom: 1px solid #dee2e6;
+        vertical-align: middle;
+    }
+
+    .table td {
+        vertical-align: middle;
+    }
+
+    .modal-content {
+        border-radius: var(--border-radius);
+    }
+
+    .modal-header {
+        border-bottom: 1px solid #dee2e6;
+        background: #f8f9fa;
+    }
+    </style>
+
+    <%- include('../partials/footer') %>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
